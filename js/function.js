@@ -4,13 +4,19 @@
 // non è importante l'ordine con cui l'utente inserisce i numeri, basta che ne indovini il più possibile.
 //1° mettere i numeri come li items, prendendo dal DOM l'ul
 //2° quindi generare dinamicamente il list items orizzontale con la variabile currentRandomNumber
-//
-//
-//
-//
+//3°prendere i valori degli input quando clicchi il bottone
+//4° pusharli in un array nuovo
+//5° comparare i numeri dell array iniziale con il nuovo, come? boh
+//6° aggiungere la frase "hai azzeccato i numeri ${} e bla"
 const listEl = document.getElementById("numbers-list");
+const formEl = document.getElementById("answers-form");
+const instructionEl = document.getElementById("instructions");
+const instruction2El = document.getElementById("instructions2");
+const inputEl = document.querySelectorAll("input"); // questa ti da una NodeList, una specie di array
+
 let list = "";
 const numbers = [];
+const userNumbers = [];
 /**
  *
  * @param {number} max numero massimo del range
@@ -32,37 +38,22 @@ for (let i = 0; i < numbers.length; i++) {
 }
 listEl.innerHTML = list;
 
-// /**
-//  *
-//  * @param {Function} fiveRandom funzione che mi genera 5 numeri casuali
-//  * @returns {number} numero corrente
-//  */
+formEl.addEventListener("submit", (event) => {
+  event.preventDefault();
+  for (let i = 0; i < inputEl.length; i++) {
+    const currentInput = inputEl[i];
+    const currentValue = parseInt(currentInput.value);
+    if (numbers.includes(currentValue)) {
+      console.log("funziona");
+    }
+  }
+});
 
-// function numberOfList(fiveRandom) {
-//   for (let i = 0; i < fiveRandom.length; i++) {
-//     const currentNumber = fiveRandom[i];
-//     return currentNumber;
-//   }
-// }
-
-// console.log(numberOfList(fiveRandomNumbers(50)));
-
-/**
-//  *
-//  * @param {Array} listNames funzione che mi restituisce le iniziali di ogni parola
-//  * @param {string} letter lettera
-//  * @returns {Array} nuovo array con parole che iniziano con quella lettera
-//  */
-// function ListNames2(listNames, letter) {
-//     for (let i = 0; i < listNames.length; i++) {
-// const letterName = [];
-//       const currentName = listNames[i];
-//       if (currentName === letter) {
-//         letterName.push(currentName);
-//       }
-//     }
-//     return letterName;
-//   }
-
-//   // Invoca la funzione qui e stampa il risultato in console
-//   console.log(ListNames2(ListNames(names), "A"));
+// Mi fa scomparire i numeri, mettere dopo i 30 secondi(?)
+// listEl.classList.add("d-none");
+// Mettere dentro la funzione dei 30 secondi(?), mi fa apparire gli input del form
+formEl.classList.remove("d-none");
+// Scompare la prima serie di istruzioni
+// instructionEl.classList.add("d-none");
+// Appare la seconda serie di istruzioni
+// instruction2El.classList.remove("d-none");
