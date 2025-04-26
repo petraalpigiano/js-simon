@@ -13,10 +13,12 @@ const formEl = document.getElementById("answers-form");
 const instructionEl = document.getElementById("instructions");
 const instruction2El = document.getElementById("instructions2");
 const inputEl = document.querySelectorAll("input"); // questa ti da una NodeList, una specie di array
+const responseEl = document.getElementById("response");
 
 let list = "";
+let response = "";
 const numbers = [];
-const userNumbers = [];
+const userRightNumbers = [];
 /**
  *
  * @param {number} max numero massimo del range
@@ -44,9 +46,14 @@ formEl.addEventListener("submit", (event) => {
     const currentInput = inputEl[i];
     const currentValue = parseInt(currentInput.value);
     if (numbers.includes(currentValue)) {
-      console.log("funziona");
+      userRightNumbers.push(currentValue);
     }
   }
+  for (let i = 0; i < userRightNumbers.length; i++) {
+    const currentNumber2 = userRightNumbers[i];
+    response += `${currentNumber2} -`;
+  }
+  responseEl.innerText = `Complimenti hai azzeccato i numeri: ` + response;
 });
 
 // Mi fa scomparire i numeri, mettere dopo i 30 secondi(?)
