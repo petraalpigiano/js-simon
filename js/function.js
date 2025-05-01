@@ -14,11 +14,13 @@ const instructionEl = document.getElementById("instructions");
 const instruction2El = document.getElementById("instructions2");
 const inputEl = document.querySelectorAll("input"); // questa ti da una NodeList, una specie di array
 const responseEl = document.getElementById("response");
+const countdownEl = document.getElementById("countdown");
 
 let list = "";
 let response = "";
 const numbers = [];
 const userRightNumbers = [];
+// FUNCTION TO GENERATE RANDOM NUMBERS
 /**
  *
  * @param {number} max numero massimo del range
@@ -34,11 +36,27 @@ function fiveRandomNumbers(max, min = 1) {
   return numbers;
 }
 console.log(fiveRandomNumbers(50));
+
+// ADDING NUMBER TO HTML DYNAMICALLY
 for (let i = 0; i < numbers.length; i++) {
   const currentNumber = numbers[i];
   list += `<li>${currentNumber}</li>`;
 }
 listEl.innerHTML = list;
+// TIMER OF 30 S
+let count = 30;
+const timer = setInterval(function () {
+  count--;
+  if (count <= 0) {
+    clearInterval(timer);
+    listEl.classList.add("d-none");
+    formEl.classList.remove("d-none");
+    instructionEl.classList.add("d-none");
+    instruction2El.classList.remove("d-none");
+    countdownEl.classList.add("d-none");
+  }
+  countdownEl.innerText = count;
+}, 1000);
 
 formEl.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -51,16 +69,11 @@ formEl.addEventListener("submit", (event) => {
   }
   for (let i = 0; i < userRightNumbers.length; i++) {
     const currentNumber2 = userRightNumbers[i];
-    response += `${currentNumber2} -`;
+    response += `${currentNumber2}  `;
   }
   responseEl.innerText = `Complimenti hai azzeccato i numeri: ` + response;
+  if (userRightNumbers.length === 0) {
+    responseEl.innerText =
+      "Hai sbagliato tutti i numeri! (memoria da pesce rosso 😐)";
+  }
 });
-
-// Mi fa scomparire i numeri, mettere dopo i 30 secondi(?)
-// listEl.classList.add("d-none");
-// Mettere dentro la funzione dei 30 secondi(?), mi fa apparire gli input del form
-formEl.classList.remove("d-none");
-// Scompare la prima serie di istruzioni
-// instructionEl.classList.add("d-none");
-// Appare la seconda serie di istruzioni
-// instruction2El.classList.remove("d-none");
